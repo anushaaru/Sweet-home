@@ -50,14 +50,22 @@ public class BookServiceImpl implements BookService {
 
         ArrayList<String> rooms = getRandomNumbers(bookingInfoEntity.getNumOfRooms());
         String roomNo = "";
+
+        /**
+         * Generates random room numbers
+         */
         for(int i = 0; i<rooms.size(); i++){
             roomNo = roomNo + rooms.get(i);
             if(i != rooms.size()-1){
                 roomNo = roomNo + ",";
             }
         }
+
         bookingInfoEntity.setRoomNumbers(roomNo);
 
+        /**
+         * calculates number of days
+         */
         long date1InMs = bookingInfoEntity.getFromDate().getTime();
         long date2InMs = bookingInfoEntity.getToDate().getTime();
 
@@ -85,13 +93,25 @@ public class BookServiceImpl implements BookService {
 
         }
         else{
+            /**
+            * if the payment mode is not UPI or CARD then throw RecordNotFoundException
+             */
             throw new RecordNotFoundException("Invalid mode of payment");
         }
+
+        /**
+         * calling paymentservice using rest template
+         */
+
         Map<String,TransactionDetailsEntity> paymentUriMap = new HashMap<>();
         paymentUriMap.put("transactionId",transactionDetailsEntity);
         int transactionId = restTemplate.postForObject(paymentManagementUrl,transactionDetailsEntity, Integer.class, paymentUriMap);
 
         //int transactionId = paymentServiceClient.makePayment(transactionDetailsEntity);
+
+        /**
+         * checking the transactionId and if it's greater setting the transactionId in booking table and saving it.
+         */
         if(transactionId > 0){
             bookingInfoEntity.setTransactionId(transactionId);
             bookRepository.save(bookingInfoEntity);
@@ -100,6 +120,7 @@ public class BookServiceImpl implements BookService {
             return bookingInfoEntity;
         }
         else{
+
             throw new PaymentFailedException("Failed to make Payment: not able to fetch transaction details");
 
         }

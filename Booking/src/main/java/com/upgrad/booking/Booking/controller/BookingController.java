@@ -17,6 +17,9 @@ public class BookingController {
     @Autowired
     private BookService bookService;
 
+    /*
+    Endpoint 1: Post - /hotel/booking
+     */
     @PostMapping(value="/booking", produces = MediaType.APPLICATION_JSON_VALUE, consumes= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity addBooking(@RequestBody BookingInfoEntity bookingInfoEntity){
 
@@ -25,7 +28,9 @@ public class BookingController {
         return new ResponseEntity(savedBooking, HttpStatus.CREATED);
 
     }
-
+    /*
+    Endpoint 1: Post - /hotel/booking/{bookingId}/transaction
+     */
     @PostMapping(value="booking/{bookingId}/transaction", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity confirmBookingPayment(@RequestBody TransactionDetailsEntity transactionDetailsEntity, @PathVariable("bookingId") int bookingId){
 

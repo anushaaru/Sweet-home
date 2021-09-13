@@ -15,6 +15,10 @@ public class PaymentController {
     @Autowired
     private PaymentServiceImpl paymentService;
 
+    /**
+     *Endpoint 1: /payment/transaction
+     */
+
     @PostMapping(value="/transaction", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(code = HttpStatus.CREATED)
     public int makePayment(@RequestBody TransactionDetailsEntity transactionDetailsEntity){
@@ -23,9 +27,11 @@ public class PaymentController {
 
     }
 
-    
+    /**
+     * Endpoint 2: /payment/transaction/{transactionId}
+     */
     @GetMapping(value="/transaction/{transactionId}")
-    public ResponseEntity getPaymentById(@PathVariable ("transactionId") int transactionId) throws Exception {
+    public ResponseEntity getPaymentById(@PathVariable ("transactionId") int transactionId) {
 
         TransactionDetailsEntity transactionDetailsEntity = paymentService.getTransactionDetails(transactionId);
 

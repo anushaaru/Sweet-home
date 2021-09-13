@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@Table(name="transaction")
 public class TransactionDetailsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

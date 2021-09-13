@@ -13,10 +13,15 @@ public class PaymentServiceImpl implements PaymentService{
     @Autowired
     private TransactionDetailsRepository transactionDetailsRepository;
 
+    /**
+     * saves the data in the transaction table and returns the transactionId
+     */
     public int getTransactionId(TransactionDetailsEntity transactionDetailsEntity){
+
         transactionDetailsRepository.save(transactionDetailsEntity);
         return transactionDetailsEntity.getTransactionId();
     }
+
 
     @Override
     public TransactionDetailsEntity getTransactionDetails(int id){

@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
+@Table(name="booking")
 public class BookingInfoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
